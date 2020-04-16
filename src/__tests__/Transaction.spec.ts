@@ -6,30 +6,30 @@ describe('Transaction', () => {
   it('should be able to create a new transaction', async () => {
     const response = await request(app).post('/transactions').send({
       title: 'Loan',
-      type: 'income',
       value: 1200,
+      type: 'income',
     });
 
     expect(isUuid(response.body.id)).toBe(true);
 
     expect(response.body).toMatchObject({
       title: 'Loan',
-      type: 'income',
       value: 1200,
+      type: 'income',
     });
   });
 
   it('should be able to list the transactions', async () => {
     await request(app).post('/transactions').send({
       title: 'Salary',
-      type: 'income',
       value: 3000,
+      type: 'income',
     });
 
     await request(app).post('/transactions').send({
       title: 'Bicycle',
-      type: 'outcome',
       value: 1500,
+      type: 'outcome',
     });
 
     const response = await request(app).get('/transactions');
@@ -39,20 +39,20 @@ describe('Transaction', () => {
         expect.objectContaining({
           id: expect.any(String),
           title: 'Salary',
-          type: 'income',
           value: 3000,
+          type: 'income',
         }),
         expect.objectContaining({
           id: expect.any(String),
           title: 'Bicycle',
-          type: 'outcome',
           value: 1500,
+          type: 'outcome',
         }),
         expect.objectContaining({
           id: expect.any(String),
           title: 'Loan',
-          type: 'income',
           value: 1200,
+          type: 'income',
         }),
       ]),
     );
@@ -67,8 +67,8 @@ describe('Transaction', () => {
   it('should not be able to create outcome transaction without a valid balance', async () => {
     const response = await request(app).post('/transactions').send({
       title: 'Bicycle',
-      type: 'outcome',
       value: 3000,
+      type: 'outcome',
     });
 
     expect(response.status).toBe(400);
